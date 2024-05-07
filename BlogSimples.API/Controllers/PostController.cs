@@ -47,7 +47,7 @@ namespace BlogSimples.API.Presentation.Controllers
         [HttpDelete]
         public async Task<ActionResult> DeleteUser([FromQuery] Guid postId)
         {
-            var storedPost = await _postService.FindByIdAsync(postId.ToString());
+            var storedPost = await _postService.FindByIdAsync(postId);
             var result = await _postService.DeleteAsync(storedPost);
 
             return Ok(result);

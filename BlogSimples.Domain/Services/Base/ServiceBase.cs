@@ -73,7 +73,7 @@ namespace BlogSimples.API.Domain.Interfaces.Base
             return await _repository.FindAllAsync();
 
         }
-        public async Task<TEntity> FindByIdAsync(string id)
+        public async Task<TEntity> FindByIdAsync(Guid id)
         {
             return await _repository.FindByIdAsync(id);
         }

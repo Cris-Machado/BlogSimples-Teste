@@ -14,7 +14,7 @@ namespace BlogSimples.API.Domain.Interfaces.Repositories
 
         #region ## Searches
         Task<IEnumerable<TEntity>> FindAllAsync();
-        Task<TEntity> FindByIdAsync(string id);
+        Task<TEntity> FindByIdAsync(Guid id);
         Task<IEnumerable<TEntity>> FindAsync(int skip, int take);
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
         Task<int> CountAllAsync();

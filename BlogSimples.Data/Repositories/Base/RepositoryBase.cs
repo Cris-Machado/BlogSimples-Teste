@@ -66,7 +66,7 @@ namespace BlogSimples.API.Data.Repositories.Base
         {
             return await DbSet.ToListAsync();
         }
-        public async Task<TEntity> FindByIdAsync(string id)
+        public async Task<TEntity> FindByIdAsync(Guid id)
         {
             return await DbSet.FindAsync(id);
         }
