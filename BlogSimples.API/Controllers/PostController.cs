@@ -4,16 +4,20 @@ using BlogSimples.API.Domain.Services;
 using BlogSimples.API.Presentation.Controllers.Base;
 using BlogSimples.Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
+using BlogSimples.API.Hubs;
 
 namespace BlogSimples.API.Presentation.Controllers
 {
     public class PostController : BaseController
     {
         private readonly IPostService _postService;
+        private readonly IHubContext<WebSocketHub> _hubContext;
 
-        public PostController(IPostService postService)
+        public PostController(IPostService postService, IHubContext<WebSocketHub> hubContext)
         {
             _postService = postService;
+            _hubContext = hubContext;
         }
 
         #region Methods
@@ -32,6 +36,8 @@ namespace BlogSimples.API.Presentation.Controllers
             var post = new Post(model.UserId, model.Title, model.Description);
             var result = await _postService.InsertAsync(post);
 
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", post, "PostInserted");
+
             return Ok(result);
         }
         
@@ -41,6 +47,8 @@ namespace BlogSimples.API.Presentation.Controllers
             var post = new Post(model.Id, model.UserId, model.Title, model.Description);
             var result = await _postService.UpdateAsync(post);
 
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", post, "PostUpdated");
+
             return Ok(result);
         }
         
@@ -49,6 +57,8 @@ namespace BlogSimples.API.Presentation.Controllers
         {
             var storedPost = await _postService.FindByIdAsync(postId);
             var result = await _postService.DeleteAsync(storedPost);
+
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", storedPost, "PostDeleted");
 
             return Ok(result);
         }

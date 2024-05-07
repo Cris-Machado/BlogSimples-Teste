@@ -77,6 +77,8 @@ namespace BlogSimples.API.IoC
                 });
             #endregion
 
+            services.AddSignalR();
+
             #region Services
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IPostService, PostService>();

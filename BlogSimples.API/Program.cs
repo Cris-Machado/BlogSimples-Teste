@@ -1,3 +1,4 @@
+using BlogSimples.API.Hubs;
 using BlogSimples.API.Presentation.Extentions;
 using Microsoft.OpenApi.Models;
 
@@ -61,5 +62,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<WebSocketHub>("/ws");
 
 app.Run();
